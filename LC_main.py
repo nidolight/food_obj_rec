@@ -1,3 +1,4 @@
+import pickle
 import torch
 import torchvision.transforms as transforms
 import initialize
@@ -59,13 +60,9 @@ if __name__ == '__main__':
     freeze_support()
     l1 = LotteClassification()
     l1.load_checkpoint('best_top1_validation.pth')
-    print(l1.inference('.\\data'))
-
-
-
-
-
     
+    with open('food_name_dict.pkl', 'rb') as f:
+        mydict = pickle.load(f)
 
-
-
+    for pred in l1.inference('.\\data'):
+        print(mydict[pred])
